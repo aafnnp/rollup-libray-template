@@ -1,4 +1,4 @@
-name: Library
+name: Build Package
 
 on: push
 

@@ -1,27 +1,35 @@
 {
   "name": "utils",
   "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
   "main": "./dist/index.js",
   "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
-  "scripts": {
-    "dev": "rollup --config --watch --environment NODE_ENV:development",
-    "build": "npm run build:clean && npm run build:lib",
-    "build:clean": "rimraf dist",
-    "build:lib": "rollup -c",
-    "types": "tsc --noEmit",
-    "finish": "npm run lint && npm run types",
-    "prettier": "prettier --ignore-path .gitignore '**/*.{js,ts}'",
-    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
-    "prepare": "husky install"
-  },
   "files": [
     "dist"
   ],
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "scripts": {
+    "build": "npm run build:clean && npm run build:lib",
+    "build:clean": "rimraf dist",
+    "build:lib": "rollup -c",
+    "dev": "rollup --config --watch --environment NODE_ENV:development",
+    "finish": "npm run lint && npm run types",
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+    "prepare": "husky install",
+    "prettier": "prettier --ignore-path .gitignore '**/*.{js,ts}'",
+    "types": "tsc --noEmit"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts}": [
+      "npm run lint"
+    ]
+  },
+  "dependencies": {
+    "dayjs": "^1.10.8"
+  },
   "devDependencies": {
     "@babel/core": "^7.17.5",
     "@babel/preset-env": "^7.16.11",
@@ -48,12 +56,7 @@
     "rollup-plugin-typescript2": "^0.31.2",
     "typescript": "^4.6.2"
   },
-  "dependencies": {
-    "dayjs": "^1.10.8"
-  },
-  "lint-staged": {
-    "src/**/*.{js,ts}": [
-      "npm run lint"
-    ]
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }

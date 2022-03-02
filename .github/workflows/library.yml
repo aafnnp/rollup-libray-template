@@ -1,6 +1,7 @@
 name: Build Package
 
-on: push
+on: 
+  branch: master
 
 jobs:
   build:

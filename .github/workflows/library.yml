@@ -1,7 +1,9 @@
 name: Build Package
 
-branches:
-  - master
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:

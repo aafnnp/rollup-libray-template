@@ -1,44 +1,37 @@
-import {nodeResolve} from '@rollup/plugin-node-resolve';
-// import commonjs from '@rollup/plugin-commonjs';
+import typescript from 'rollup-plugin-typescript2';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
 import {terser} from 'rollup-plugin-terser';
+
 import pkg from './package.json';
-const isDev = process.env.NODE_ENV === 'development';
 
-const input = ['src/index.js'];
+const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
-export default [
-  {
-    // UMD
-    input,
-    plugins: [nodeResolve(), babel({babelHelpers: 'bundled'}), terser()],
-    output: {
-      file: `dist/${pkg.name}.min.js`,
+export default {
+  input: 'src/index.ts',
+  output: [
+    {
+      file: pkg.main,
       format: 'umd',
-      name: 'utils',
-      esModule: false,
-      exports: 'named',
-      sourcemap: true
-    }
-  },
-
-  // ESM & CJS
-  {
-    input,
-    plugins: [nodeResolve()],
-    output: [
-      {
-        dir: 'dist/esm',
-        format: 'esm',
-        exports: 'named',
-        sourcemap: true
-      },
-      {
-        dir: 'dist/cjs',
-        format: 'cjs',
-        exports: 'named',
-        sourcemap: true
-      }
-    ]
-  }
-];
+      name: 'ComoNorth',
+    },
+    {
+      file: pkg.module,
+      format: 'es',
+    },
+  ],
+  plugins: [
+    typescript({
+      rollupCommonJSResolveHack: true,
+      clean: true,
+    }),
+    babel({
+      exclude: 'node_modules/**',
+      extensions,
+    }),
+    resolve(),
+    commonjs(),
+    terser(),
+  ],
+};

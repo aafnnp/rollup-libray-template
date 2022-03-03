@@ -25,10 +25,10 @@ jobs:
           node-version: 14
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: 'echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN >> ~/.npmrc'
+      - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}} >> ~/.npmrc
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
   publish-gpr:
     needs: build
@@ -40,7 +40,7 @@ jobs:
           node-version: 14
           registry-url: https://npm.pkg.github.com/
       - run: npm ci
-      - run: 'echo "//npm.pkg.github.com/:_authToken=$GH_TOKEN >> ~/.npmrc'
+      - run: echo "//npm.pkg.github.com/:_authToken=${{secrets.GH_TOKEN}} >> ~/.npmrc
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN}}

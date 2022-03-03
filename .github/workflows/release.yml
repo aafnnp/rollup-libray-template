@@ -26,6 +26,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm publish
+        run: 'echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN >> ~/.npmrc'
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
@@ -40,5 +41,6 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: npm ci
       - run: npm publish
+        run: 'echo "//npm.pkg.github.com/:_authToken=$GH_TOKEN >> ~/.npmrc'
         env:
           NODE_AUTH_TOKEN: ${{secrets.GH_TOKEN}}
